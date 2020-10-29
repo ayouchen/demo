@@ -1,0 +1,64 @@
+<!DOCTYPE HTML >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>修改页面</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+<form th:action="@{/studentb/add}"   method="post" >
+    <table >
+        <tr>
+            <td>
+                学号：<input type="text" name="sno" id="sno" onblur="getsno()" /><span id="msg" style="color: red"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                学生姓名：<input type="text" name="name" id="name" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                密码：<input type="text" name="pwd" id="pwd" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                性别：
+                <input type="radio" name="sex" value="0" />男
+                <input type="radio" name="sex" value="1" />女
+            </td>
+        </tr>
+        <tr>
+            <td>
+                出生日期：
+                <input type="date" name="birthday" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="注册" />
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+<script>
+    function getsno() {
+        var sno = $("#sno").val();
+        $.ajax({
+            url:"/studentb/register/valiname/"+sno,
+            type:"get",
+            success:function (req) {
+                console.log(req);
+                console.log(req == "yes")
+                if (req == "yes"){
+                    $("#msg").text("");
+                } else{
+                    $("#msg").text("用户名已重复");
+                }
+            }
+        })
+    }
+</script>
+</html>

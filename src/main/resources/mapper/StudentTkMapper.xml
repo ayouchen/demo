@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiyun.mapper.StudentTkMapper">
+    <select id="findStudentByCondition" parameterType="com.jiyun.entity.Students" resultType="com.jiyun.entity.Students">
+        select  * from students
+        <where>
+            <if test="name!=null and name!=''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="startBirth!=null">
+                and birthday &gt;= #{startBirth}
+            </if>
+             <if test="endBirth!=null">
+                and birthday &lt;= #{endBirth}
+            </if>
+        </where>
+    </select>
+
+</mapper>

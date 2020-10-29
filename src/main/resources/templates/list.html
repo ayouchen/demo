@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>學生列表</title>
+</head>
+<script type="text/javascript">
+
+</script>
+<body>
+<div class="container">
+
+</div>
+<button ><a th:href="@{/studentb/toadd}">添加</a> </button><br>
+<form id="fm" th:action="@{/studentb/list}">
+    姓名：<input type="text" name="name" th:value="${stu.name}">
+    出生日期<input type="date" name="startBirth" th:value="${#dates.format(stu.startBirth,'yyyy-MM-dd')}">
+        ---<input type="date" name="endBirth" th:value="${#dates.format(stu.endBirth,'yyyy-MM-dd')}">
+    <input type="hidden" name="pageNum" id="pn">
+    <input type="submit" value="搜索">
+</form>
+<table>
+    <thead>
+    <tr>
+        <td>
+            编号
+        </td>
+        <td>
+            姓名
+        </td>
+        <td>
+            密码
+        </td>
+        <td>
+            性别
+        </td>
+
+        <td>
+            出生日期
+        </td>
+        <td>
+            操作
+        </td>
+    </tr>
+    </thead>
+
+    <!--private Integer sno;-->
+    <!--private String name;-->
+    <!--private char sex;-->
+    <!--private Date birthday;-->
+
+    <tbody>
+    <tr th:each="s :${page.list}"  >
+        <td th:text="${s.sno}">
+        </td>
+        <td th:text="${s.name}">
+        </td>
+        <td th:text="${s.pwd}">
+        </td>
+        <td>
+            <span th:if="${s.sex} == '0'">
+                男
+            </span>
+            <span th:if="${s.sex} == '1'">
+                女
+            </span>
+        </td>
+        <td th:text="${#dates.format(s.birthday,'yyyy-MM-dd')}">
+        </td>
+        <td>
+            <a th:href="@{/studentb/edit/{sno}(sno=${s.id})}">修改</a>
+            <a th:href="@{/studentb/del/{sno}(sno=${s.id})}">删除</a>
+        </td>
+
+    </tr>
+
+    </tbody>
+</table>
+
+    <input type="button" value="首页" onclick="jump(1)">
+    <input type="button" value="上一页" th:onclick="'jump('+${page.prePage}+')'">
+    <input type="button" value="下一页" th:onclick="'jump('+${page.nextPage}+')'">
+    <input type="button" value="尾页" th:onclick="'jump('+${page.pages}+')'">
+</body>
+<script>
+    function jump (obj) {
+        if (obj==0){
+            obj = 1;
+        }
+        document.getElementById("pn").value = obj;
+        document.getElementById("fm").submit();
+    }
+</script>
+</html>
