@@ -14,6 +14,7 @@ public class StudentIntercepter implements HandlerInterceptor {
         }
         Students student = (Students) request.getSession().getAttribute("currentUser");
         if (student != null){
+            //change
             return  true;
         }
         response.sendRedirect("/studentb/login");
